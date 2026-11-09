@@ -355,20 +355,12 @@
   });
 
   // ---------- real file picker + drag and drop for the import panel ----------
-  var picker = null;
+    // Prototype: no system file picker. Pretend the user picked the sample schema file.
   function pickFile() {
-    if (!picker) {
-      picker = document.createElement('input');
-      picker.type = 'file';
-      picker.accept = '.json,application/json';
-      picker.style.display = 'none';
-      picker.addEventListener('change', function () {
-        if (picker.files && picker.files[0]) useFile(picker.files[0]);
-        picker.value = '';
-      });
-      document.body.appendChild(picker);
-    }
-    picker.click();
+    var n = document.body.getAttribute('data-screen') === 'update' ? 14 : 12;
+    var props = {};
+    for (var i = 1; i <= n; i++) props['setting' + i] = { type: 'string' };
+    useFile(new File([JSON.stringify({ type: 'object', properties: props })], 'crm-connection.schema.json', { type: 'application/json' }));
   }
   var upTimer = null;
   function useFile(f) {
