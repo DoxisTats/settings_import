@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Import file validation states</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#066074}a:hover{color:#05495A}
+.cap{margin:0 0 8px;font-size:12px;line-height:18px;font-weight:600;color:#717680;letter-spacing:0.02em;text-transform:uppercase}
+.lbl{display:flex;gap:2px;margin-bottom:6px;font-size:14px;line-height:20px;font-weight:500;color:#414651}
+.dz{display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px 24px;border-radius:12px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E9EAEB;text-align:center}
+.dz.err{box-shadow:inset 0 0 0 1px #FDA29B}
+.up{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#414651;box-shadow:inset 0 0 0 1px #D5D7DA,0 1px 2px rgba(10,13,18,0.05)}
+.lnk{padding:0;border:0;background:transparent;font:inherit;font-size:14px;line-height:20px;font-weight:600;color:#066074;cursor:pointer}
+.fi{display:flex;align-items:center;gap:12px;padding:12px 12px 12px 16px;border-radius:12px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #D5D7DA,0 1px 2px rgba(10,13,18,0.05)}
+.fi.err{box-shadow:inset 0 0 0 1px #FDA29B}
+.fic{width:40px;height:40px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:8px}
+.fn{font-size:14px;line-height:20px;font-weight:500;color:#414651;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ib2{width:36px;height:36px;display:flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:6px;background:transparent;color:#A4A7AE;cursor:pointer}
+.ib2:hover{background:#F5F5F5;color:#717680}
+.err-t{margin:6px 0 0;font-size:14px;line-height:20px;color:#D92D20}
+.hint{margin:6px 0 0;font-size:14px;line-height:20px;color:#535862}
+.fld{width:100%;height:40px;box-sizing:border-box;padding:7px 11px;border:1px solid #D5D7DA;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;line-height:24px;color:#181D27;box-shadow:0 1px 2px rgba(10,13,18,0.05)}
+</style>
+<link rel="stylesheet" href="prototype.css">
+<script src="prototype.js" defer></script>
+</head>
+<body data-screen="ref">
+<a href="index.html" class="pt-home" style="position:fixed;left:50%;transform:translateX(-50%);bottom:12px;z-index:70;padding:6px 10px;border-radius:8px;background:#181D27;color:#fff;font:600 12px/18px Inter,system-ui,sans-serif;text-decoration:none;opacity:.85">← All screens</a>
+<div style="width: 520px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 32px; background: #FFFFFF; font-family: Inter, system-ui, sans-serif; font-size: 14px; line-height: 20px; color: #181D27">
+
+<div>
+<p class="cap">No file chosen</p>
+<span class="lbl">JSON Schema file<span aria-hidden="true" style="color: #1F7082">*</span></span>
+<div class="dz">
+<div class="up"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v1.8c0 1.68 0 2.52-.33 3.16a3 3 0 0 1-1.31 1.31C18.72 21.6 17.88 21.6 16.2 21.6H7.8c-1.68 0-2.52 0-3.16-.33a3 3 0 0 1-1.31-1.31C3 19.32 3 18.48 3 16.8V15M17 8l-5-5-5 5M12 3v12"></path></svg></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="color: #535862"><button type="button" class="lnk">Choose a file</button> or drag it here</span><span style="font-size: 12px; line-height: 18px; color: #535862">JSON Schema (.json)</span></div>
+</div>
+</div>
+
+<div>
+<p class="cap">Checking the file</p>
+<div class="fi">
+<div class="fic" style="background: #F5F5F5; color: #717680"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path transform="translate(4 2)" d="M10 0.27L10 4.4C10 4.96 10 5.24 10.11 5.45C10.2 5.64 10.36 5.8 10.55 5.89C10.76 6 11.04 6 11.6 6L15.73 6M11.2 20L4.8 20C3.12 20 2.28 20 1.64 19.67C1.07 19.39 0.61 18.93 0.33 18.36C0 17.72 0 16.88 0 15.2L0 4.8C0 3.12 0 2.28 0.33 1.64C0.61 1.07 1.07 0.61 1.64 0.33C2.28 0 3.12 0 4.8 0L10 0L16 6L16 15.2C16 16.88 16 17.72 15.67 18.36C15.39 18.93 14.93 19.39 14.36 19.67C13.72 20 12.88 20 11.2 20Z"></path></svg></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<span class="fn">crm-connection.schema.json</span>
+<div role="progressbar" aria-label="Checking file" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="height: 8px; border-radius: 9999px; background: #E9EAEB"><div style="width: 60%; height: 8px; border-radius: 9999px; background: #1F7082"></div></div>
+<span style="color: #535862">Checking the schema…</span>
+</div>
+</div>
+</div>
+
+<div>
+<p class="cap">Valid file</p>
+<div class="fi">
+<div class="fic" style="background: #E6EFF1; color: #066074"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path transform="translate(4 2)" d="M10 0.27L10 4.4C10 4.96 10 5.24 10.11 5.45C10.2 5.64 10.36 5.8 10.55 5.89C10.76 6 11.04 6 11.6 6L15.73 6M11.2 20L4.8 20C3.12 20 2.28 20 1.64 19.67C1.07 19.39 0.61 18.93 0.33 18.36C0 17.72 0 16.88 0 15.2L0 4.8C0 3.12 0 2.28 0.33 1.64C0.61 1.07 1.07 0.61 1.64 0.33C2.28 0 3.12 0 4.8 0L10 0L16 6L16 15.2C16 16.88 16 17.72 15.67 18.36C15.39 18.93 14.93 19.39 14.36 19.67C13.72 20 12.88 20 11.2 20Z"></path></svg></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="fn">crm-connection.schema.json</span><span style="display: inline-flex; align-items: center; gap: 4px; color: #067647">Valid JSON Schema · 12 settings in 3 sections</span></div>
+<button type="button" class="ib2" aria-label="Remove file"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+</div>
+</div>
+
+<div>
+<p class="cap">Unsupported file type</p>
+<div class="dz err">
+<div class="up"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v1.8c0 1.68 0 2.52-.33 3.16a3 3 0 0 1-1.31 1.31C18.72 21.6 17.88 21.6 16.2 21.6H7.8c-1.68 0-2.52 0-3.16-.33a3 3 0 0 1-1.31-1.31C3 19.32 3 18.48 3 16.8V15M17 8l-5-5-5 5M12 3v12"></path></svg></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="color: #535862"><button type="button" class="lnk">Choose a file</button> or drag it here</span><span style="font-size: 12px; line-height: 18px; color: #535862">JSON Schema (.json)</span></div>
+</div>
+<p class="err-t">“customer-settings.xml” isn’t a JSON Schema file. Choose a .json file.</p>
+</div>
+
+<div>
+<p class="cap">Not valid JSON</p>
+<div class="fi err">
+<div class="fic" style="background: #FEF3F2; color: #D92D20"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v4M12 16h.01M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"></path></svg></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="fn">crm-connection.schema.json</span><span style="color: #D92D20">Can’t read the file</span></div>
+<button type="button" class="ib2" aria-label="Remove file"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+</div>
+<p class="err-t">This isn’t valid JSON. Line 14, column 3: unexpected “}”. Fix the file and choose it again.</p>
+</div>
+
+<div>
+<p class="cap">Schema not supported</p>
+<div class="fi err">
+<div class="fic" style="background: #FEF3F2; color: #D92D20"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v4M12 16h.01M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"></path></svg></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="fn">crm-connection.schema.json</span><span style="color: #D92D20">2 problems in the schema</span></div>
+<button type="button" class="ib2" aria-label="Remove file"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+</div>
+<ul style="margin: 6px 0 0; padding-left: 20px; color: #D92D20">
+<li><code style="font-family: ui-monospace, monospace; font-size: 13px">properties.logo</code> uses type “binary”, which settings don’t support.</li>
+<li><code style="font-family: ui-monospace, monospace; font-size: 13px">properties.timeout.default</code> is “thirty” but must be a number.</li>
+</ul>
+</div>
+
+<div>
+<p class="cap">Name already used</p>
+<label for="fs-name" class="lbl">Name<span aria-hidden="true" style="color: #1F7082">*</span></label>
+<input id="fs-name" class="fld" aria-invalid="true" aria-describedby="fs-name-e" value="CRM connection" style="border-color: #FDA29B">
+<p id="fs-name-e" class="err-t">A definition named “CRM connection” already exists in cust_onboarding. Choose another name.</p>
+</div>
+
+</div>
+</body>
+</html>

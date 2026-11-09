@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Studio – Settings prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light}
+body{margin:0;background:#FAFAFA;font-family:Inter,system-ui,sans-serif;color:#181D27}
+header{background:linear-gradient(5deg,#075365 15.8%,#1F7082 82.5%);color:#FFFFFF}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+header .wrap{padding-top:40px;padding-bottom:40px}
+h1{margin:0;font-size:30px;line-height:38px;font-weight:600}
+header p{margin:8px 0 0;max-width:680px;font-size:16px;line-height:24px;color:rgba(255,255,255,0.85)}
+.start{display:inline-flex;align-items:center;gap:8px;margin-top:24px;height:44px;padding:0 18px;border-radius:8px;background:#FFFFFF;color:#066074;font-weight:600;font-size:16px;text-decoration:none}
+.start:hover{background:#E6EFF1}
+h2{margin:40px 0 4px;font-size:18px;line-height:28px;font-weight:600}
+.sub{margin:0 0 20px;font-size:14px;line-height:20px;color:#535862}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
+.card{display:flex;flex-direction:column;border-radius:12px;background:#FFFFFF;color:inherit;text-decoration:none;overflow:hidden;box-shadow:inset 0 0 0 1px #E9EAEB,0 4px 4px rgba(6,96,116,0.04)}
+.card:hover{box-shadow:inset 0 0 0 1px #1F7082,0 12px 16px -4px rgba(10,13,18,0.08)}
+.thumb{aspect-ratio:16/10;background:#F5F5F5 center top/cover no-repeat;border-bottom:1px solid #E9EAEB}
+.meta{padding:16px 20px 20px}
+.meta b{display:block;font-size:16px;line-height:24px;font-weight:600}
+.meta span{display:block;margin-top:4px;font-size:14px;line-height:20px;color:#535862}
+.tag{display:inline-block;margin-top:10px;padding:2px 8px;border-radius:9999px;font-size:12px;line-height:18px;font-weight:500;background:#E6EFF1;color:#066074}
+.tag.static{background:#F5F5F5;color:#414651}
+footer{padding:48px 0;font-size:13px;line-height:20px;color:#717680}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>Business Studio – Application settings</h1>
+<p>Clickable prototype of the Settings page in an application’s edit mode: instances, settings fields, and importing, exporting and updating settings definitions.</p>
+<a class="start" href="settings.html">Open the prototype →</a>
+</div></header>
+
+<main class="wrap">
+<h2>Clickable screens</h2>
+<p class="sub">Menus, dialogs, filters and notifications work in these.</p>
+<div class="grid">
+<a class="card" href="settings.html"><div class="thumb" style="background-image:url(shot-settings.png)"></div><div class="meta"><b>Settings page</b><span>Definition options (Import, Export, Update from file), instance ⋯ menus, Delete icon, tabs, section links, Find a setting, Save.</span><span class="tag">Clickable</span></div></a>
+<a class="card" href="import-definition.html"><div class="thumb" style="background-image:url(shot-import-definition.png)"></div><div class="meta"><b>Import definition</b><span>Remove and re-choose the file, Close, Cancel, Import (returns to Settings with a notification).</span><span class="tag">Clickable</span></div></a>
+<a class="card" href="import-definition-errors.html"><div class="thumb" style="background-image:url(shot-import-definition-errors.png)"></div><div class="meta"><b>Import definition – errors</b><span>Validation summary and errors on the file, name and namespace fields.</span><span class="tag">Clickable</span></div></a>
+<a class="card" href="export-definitions.html"><div class="thumb" style="background-image:url(shot-export-definitions.png)"></div><div class="meta"><b>Export definition</b><span>Pick a definition, include instance values or not, export as a .json file.</span><span class="tag">Clickable</span></div></a>
+<a class="card" href="update-definition.html"><div class="thumb" style="background-image:url(shot-update-definition.png)"></div><div class="meta"><b>Update from file</b><span>Pick a custom definition, choose the new schema file, review the changes, update.</span><span class="tag">Clickable</span></div></a>
+</div>
+
+<h2>States and components</h2>
+<p class="sub">Reference sheets showing every state side by side.</p>
+<div class="grid">
+<a class="card" href="import-file-states.html"><div class="thumb" style="background-image:url(shot-import-file-states.png)"></div><div class="meta"><b>Import – file and name states</b><span>Empty, checking, valid, unsupported type, invalid JSON, unsupported schema, duplicate name.</span><span class="tag static">Reference</span></div></a>
+<a class="card" href="update-from-file.html"><div class="thumb" style="background-image:url(shot-update-from-file.png)"></div><div class="meta"><b>Update rejected</b><span>Dialog shown when an instance doesn’t fit the new schema.</span><span class="tag static">Reference</span></div></a>
+<a class="card" href="notifications.html"><div class="thumb" style="background-image:url(shot-notifications.png)"></div><div class="meta"><b>Notifications</b><span>Success and failure for import, export and update.</span><span class="tag static">Reference</span></div></a>
+</div>
+</main>
+<footer class="wrap">Design mockups. Names and values are example content.</footer>
+</body>
+</html>

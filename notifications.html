@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Import, export and update feedback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.cap{margin:0;font-size:12px;line-height:18px;font-weight:600;color:#717680;letter-spacing:0.02em;text-transform:uppercase}
+.toast{position:relative;display:flex;align-items:flex-start;gap:12px;padding:16px 48px 16px 16px;border-radius:12px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E9EAEB,0 12px 16px -4px rgba(10,13,18,0.08),0 4px 6px -2px rgba(10,13,18,0.03)}
+.ico{flex:none;display:block}
+.ok .ico{color:#079455}
+.bad .ico{color:#D92D20}
+.fic{width:40px;height:40px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#E6EFF1;color:#1F7082}
+.tt{margin:0;font-size:14px;line-height:20px;font-weight:600;color:#181D27}
+.td{margin:4px 0 0;font-size:14px;line-height:20px;color:#535862}
+.acts{display:flex;gap:12px;margin-top:12px}
+.lnk{padding:0;border:0;background:transparent;font:inherit;font-size:14px;line-height:20px;font-weight:600;color:#066074;cursor:pointer}
+.lnk:hover{color:#05495A}
+.lnk.g{color:#535862}
+.lnk.g:hover{color:#414651}
+.x{position:absolute;top:8px;right:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:8px;background:transparent;color:#A4A7AE;cursor:pointer}
+.x:hover{background:#F5F5F5;color:#717680}
+.bar{height:8px;margin-top:16px;border-radius:9999px;background:#E9EAEB}
+.bar div{height:8px;border-radius:9999px;background:#1F7082}
+.pct{margin:8px 0 0;text-align:right;font-size:14px;line-height:20px;font-weight:500;color:#414651}
+</style>
+<link rel="stylesheet" href="prototype.css">
+<script src="prototype.js" defer></script>
+</head>
+<body data-screen="ref">
+<a href="index.html" class="pt-home" style="position:fixed;left:50%;transform:translateX(-50%);bottom:12px;z-index:70;padding:6px 10px;border-radius:8px;background:#181D27;color:#fff;font:600 12px/18px Inter,system-ui,sans-serif;text-decoration:none;opacity:.85">← All screens</a>
+<div style="width: 1000px; box-sizing: border-box; padding: 32px; display: grid; grid-template-columns: 140px repeat(2, minmax(0, 1fr)); gap: 24px 32px; align-items: start; background: #FAFAFA; font-family: Inter, system-ui, sans-serif; font-size: 14px; line-height: 20px; color: #181D27">
+
+<span></span><p class="cap">Success</p><p class="cap">Failure</p>
+
+<p class="cap" style="padding-top: 18px">Import</p>
+<div class="toast ok" role="status">
+<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 12l3 3 6-6M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"/></svg>
+<div style="flex: 1; min-width: 0"><p class="tt">Definition imported</p><p class="td">“CRM connection” is now a tab on this page.</p><div class="acts"><button class="lnk g">Dismiss</button><button class="lnk">Create instance</button></div></div>
+<button class="x" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+</div>
+<div class="toast bad" role="alert">
+<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v4M12 16h.01M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"/></svg>
+<div style="flex: 1; min-width: 0"><p class="tt">Import failed</p><p class="td">The server didn’t accept the definition, so nothing was imported. Your entries in the panel are kept.</p><div class="acts"><button class="lnk g">Copy error details</button><button class="lnk">Try again</button></div></div>
+<button class="x" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+</div>
+
+<p class="cap" style="padding-top: 18px">Export</p>
+<div class="toast ok" role="status">
+<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 12l3 3 6-6M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"/></svg>
+<div style="flex: 1; min-width: 0"><p class="tt">Definition exported</p><p class="td">crm-connection.schema.json was downloaded. It contains the schema only, no instance values.</p><div class="acts"><button class="lnk g">Dismiss</button></div></div>
+<button class="x" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+</div>
+<div class="toast bad" role="alert">
+<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v4M12 16h.01M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"/></svg>
+<div style="flex: 1; min-width: 0"><p class="tt">Export failed</p><p class="td">The schema for “CRM connection” couldn’t be downloaded. Check your connection and try again.</p><div class="acts"><button class="lnk g">Dismiss</button><button class="lnk">Try again</button></div></div>
+<button class="x" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+</div>
+
+<p class="cap" style="padding-top: 18px">Update from file</p>
+<div class="toast ok" role="status">
+<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 12l3 3 6-6M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"/></svg>
+<div style="flex: 1; min-width: 0"><p class="tt">Definition updated</p><p class="td">“CRM connection” uses the new schema. All 3 instances still fit.</p><div class="acts"><button class="lnk g">Dismiss</button><button class="lnk">Review instances</button></div></div>
+<button class="x" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+</div>
+<div class="toast bad" role="alert">
+<svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v4M12 16h.01M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"/></svg>
+<div style="flex: 1; min-width: 0"><p class="tt">Definition not updated</p><p class="td">1 of 3 instances doesn’t fit the new schema. “CRM connection” is unchanged.</p><div class="acts"><button class="lnk g">Dismiss</button><a href="update-from-file.html" class="lnk" style="text-decoration: none">Read more</a></div></div>
+<button class="x" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+</div>
+
+</div>
+</body>
+</html>

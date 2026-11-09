@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Update rejected</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.cap{margin:0 0 12px;font-size:12px;line-height:18px;font-weight:600;color:#FFFFFF;letter-spacing:0.02em;text-transform:uppercase}
+.modal{box-sizing:border-box;display:flex;flex-direction:column;border-radius:12px;background:#FFFFFF;box-shadow:0 20px 24px -4px rgba(10,13,18,0.08),0 8px 8px -4px rgba(10,13,18,0.03)}
+.fi{display:flex;align-items:center;gap:12px;padding:12px 12px 12px 16px;border-radius:12px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #D5D7DA,0 1px 2px rgba(10,13,18,0.05)}
+.fn{font-size:14px;line-height:20px;font-weight:500;color:#414651;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ib2{width:36px;height:36px;display:flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:6px;background:transparent;color:#A4A7AE;cursor:pointer}
+.ib2:hover{background:#F5F5F5;color:#717680}
+.sbtn{flex:1;height:44px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;padding:0 16px;border:0;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;line-height:24px;font-weight:600;color:#414651;cursor:pointer;box-shadow:inset 0 0 0 1px #D5D7DA,0 1px 2px rgba(10,13,18,0.05),inset 0 -2px 0 rgba(10,13,18,0.05)}
+.pbtn{flex:1;height:44px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;padding:0 16px;border:0;border-radius:8px;background:#1F7082;font:inherit;font-size:16px;line-height:24px;font-weight:600;color:#FFFFFF;cursor:pointer;box-shadow:0 1px 2px rgba(10,13,18,0.05),inset 0 -2px 0 rgba(10,13,18,0.05),inset 0 0 0 1px rgba(10,13,18,0.18)}
+.pbtn:hover{background:#155C6E}
+.dl{display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 12px;margin:0;font-size:14px;line-height:20px}
+.dl dt{color:#535862}
+.dl dd{margin:0;color:#181D27;font-weight:500}
+</style>
+<link rel="stylesheet" href="prototype.css">
+<script src="prototype.js" defer></script>
+</head>
+<body data-screen="ref">
+<a href="index.html" class="pt-home" style="position:fixed;left:50%;transform:translateX(-50%);bottom:12px;z-index:70;padding:6px 10px;border-radius:8px;background:#181D27;color:#fff;font:600 12px/18px Inter,system-ui,sans-serif;text-decoration:none;opacity:.85">← All screens</a>
+<div style="width: 620px; box-sizing: border-box; padding: 40px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; align-items: start; background: rgba(10,13,18,0.35); font-family: Inter, system-ui, sans-serif; font-size: 14px; line-height: 20px; color: #181D27">
+
+<div>
+<p class="cap">Update rejected</p>
+<div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="up-t2" aria-describedby="up-d2">
+<div style="display: flex; gap: 16px; padding: 24px 16px 0 24px">
+<div style="width: 48px; height: 48px; flex: none; display: flex; align-items: center; justify-content: center; border-radius: 9999px; background: #FEE4E2; color: #D92D20"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v4M12 16h.01M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"></path></svg></div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px; padding-top: 2px">
+<h2 id="up-t2" style="margin: 0; font-size: 18px; line-height: 28px; font-weight: 600; color: #181D27">Definition not updated</h2>
+<p id="up-d2" style="margin: 0; color: #535862">1 of 3 instances doesn’t fit the new schema. “CRM connection” is unchanged.</p>
+</div>
+<button class="ib2" style="width: 40px; height: 40px" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+</div>
+<div style="padding: 20px 24px 0">
+<div style="border-radius: 12px; box-shadow: inset 0 0 0 1px #E9EAEB">
+<div style="display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 12px; padding: 12px 16px; font-size: 12px; line-height: 18px; font-weight: 500; color: #535862; background: #FAFAFA; border-radius: 12px 12px 0 0; box-shadow: inset 0 -1px 0 #E9EAEB"><span>Instance</span><span>Problem</span></div>
+<div style="display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 12px; padding: 16px; font-size: 14px; line-height: 20px"><span style="font-weight: 500; color: rgb(24, 29, 39)">Salesforce US</span><span style="color: rgb(83, 88, 98)">Timeout (minutes) is 1, but the new minimum is 5.</span></div>
+</div>
+<p style="margin: 16px 0 0; color: #535862">Change the value in the instance, or adjust the schema, then try again.</p>
+</div>
+<div style="display: flex; gap: 12px; padding: 32px 24px 24px">
+<button class="sbtn">Close</button>
+<button class="pbtn">Choose another file</button>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>
