@@ -38,6 +38,12 @@
     tgVal: function () { state.val = !state.val; },
     selAll: function () { var all = selCount() === 4; Object.keys(state.sel).forEach(function (k) { state.sel[k] = !all; }); syncExport(); },
     doUpdate: function () {
+      if (document.body.getAttribute('data-screen') === 'newfile') {
+        if (!state.hasFile) { toast('bad', 'Choose a file', 'Add a settings file to create the instance.'); return; }
+        var n = document.getElementById('nf-name');
+        location.href = 'settings.html?toast=instance-created&name=' + encodeURIComponent(n ? n.value : 'New instance');
+        return;
+      }
       if (!state.hasFile) { toast('bad', 'Choose a file', 'Add a JSON Schema file to update the definition.'); return; }
       location.href = 'settings.html?toast=' + (state.ownFile ? 'updated' : 'update-rejected');
     },
@@ -51,7 +57,7 @@
     removeFile: function () { clearInterval(upTimer); state.uploading = false; state.hasFile = false; },
     chooseFile: function () { pickFile(); }
   };
-  ['def', 'eu', 'us'].forEach(function (k) {
+  ['def', 'eu', 'us', 'gen', 'add'].forEach(function (k) {
     handlers['t.' + k] = function () {
       state.menu = state.menu === k ? null : k;
       state.appOpen = false;
@@ -78,6 +84,7 @@
     check: '<path d="M7.5 12l3 3 6-6M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"/>',
     alert: '<path d="M12 8v4M12 16h.01M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Z"/>',
     trash: '<path d="M16 6v-.8c0-1.12 0-1.68-.22-2.11a2 2 0 0 0-.87-.87C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.11.22a2 2 0 0 0-.87.87C8 3.52 8 4.08 8 5.2V6M10 11.5v5M14 11.5v5M3 6h18M19 6v11.2c0 1.68 0 2.52-.33 3.16a3 3 0 0 1-1.31 1.31c-.64.33-1.48.33-3.16.33H9.8c-1.68 0-2.52 0-3.16-.33a3 3 0 0 1-1.31-1.31C5 19.72 5 18.88 5 17.2V6"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>',
     pen: '<path d="M3 21h4.5L19 9.5a3.18 3.18 0 0 0-4.5-4.5L3 16.5V21ZM13.5 6.5l4 4"/>',
     x: '<path d="M18 6L6 18M6 6l12 12"/>'
   };
@@ -156,6 +163,36 @@
     if (s) { s.remove(); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
   }
 
+  // Create settings instance modal (Figma: new instance modal)
+  function showCreateInstance() {
+    closeDialog();
+    lastFocus = document.activeElement;
+    var scrim = document.createElement('div');
+    scrim.className = 'pt-scrim pt-cm-scrim';
+    scrim.innerHTML =
+      '<div class="pt-cm" role="dialog" aria-modal="true" aria-labelledby="pt-cm-t" aria-describedby="pt-cm-d">' +
+        '<div class="pt-cm-h"><div class="pt-cm-ic">' + svg('plus', 24) + '</div>' +
+          '<div class="pt-cm-tx"><h2 id="pt-cm-t">Create settings instance</h2><p id="pt-cm-d">Create individual settings for each use case and assign meaningful names that clearly indicate the intended purpose.</p></div></div>' +
+        '<button type="button" class="pt-cm-x" aria-label="Close" data-close>' + svg('x', 24) + '</button>' +
+        '<div class="pt-cm-b"><label for="pt-cm-in">Name</label><input id="pt-cm-in" placeholder="e.g. Finance Department" autocomplete="off"></div>' +
+        '<div class="pt-cm-f"><button type="button" class="pt-cm-sec" data-close>Cancel</button><button type="button" class="pt-cm-pri" data-ok>Confirm</button></div>' +
+      '</div>';
+    document.body.appendChild(scrim);
+    var input = scrim.querySelector('#pt-cm-in');
+    input.focus();
+    function ok() {
+      var v = input.value.trim() || 'New instance';
+      closeDialog();
+      addInstance(v);
+      toast('ok', 'Instance created', '“' + v + '” was created with the default values.');
+    }
+    scrim.addEventListener('click', function (e) {
+      if (e.target === scrim || e.target.closest('[data-close]')) { closeDialog(); return; }
+      if (e.target.closest('[data-ok]')) ok();
+    });
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); ok(); } });
+  }
+
   function showRejected() {
     closeDialog();
     lastFocus = document.activeElement;
@@ -191,7 +228,9 @@
   function nameOf(key) {
     var li = rowFor(key);
     var t = li && li.querySelector('.t1');
-    return t ? t.textContent : key;
+    if (t) return t.textContent;
+    var w = document.getElementById('ws-title');
+    return w ? w.textContent : key;
   }
   function updateCount() {
     var list = document.querySelector('[aria-labelledby="ins-title"] ul');
@@ -209,10 +248,47 @@
     });
     var title = document.getElementById('ws-title');
     if (title) title.textContent = nameOf(key);
+    fieldSet(li.dataset.newKey && li.dataset.mode !== 'copy', li.dataset.mode === 'file');
+    var form = document.querySelector('form.scr');
+    if (form) form.scrollTop = 0;
   }
+  var newCount = 0;
+  var orig = null;
+  function fieldSet(defaults, fromFile) {
+    var url = document.getElementById('v-url'), cid = document.getElementById('v-cid');
+    if (!url || !cid) return;
+    if (!orig) orig = { url: url.value, cid: cid.value };
+    if (defaults) {
+      url.value = fromFile ? 'https://apac-sales.my.salesforce.com' : '';
+      cid.value = fromFile ? '[CLIENT ID]' : '';
+      url.placeholder = 'Not set'; cid.placeholder = 'Not set';
+    } else { url.value = orig.url; cid.value = orig.cid; }
+  }
+  function addInstance(name, fromFile) {
+    var src = rowFor('us') || document.querySelector('.ins2');
+    if (!src) return;
+    var key = 'new' + (++newCount);
+    var li = src.cloneNode(true);
+    li.hidden = false; li.style.display = '';
+    li.querySelector('.t1').textContent = name;
+    li.querySelectorAll('[data-on^="t."]').forEach(function (el) { el.setAttribute('data-on', 't.' + key); });
+    li.querySelectorAll('[data-if^="m."]').forEach(function (el) { el.setAttribute('data-if', 'm.' + key); el.hidden = true; });
+    li.querySelectorAll('[data-expanded^="m."]').forEach(function (el) { el.setAttribute('data-expanded', 'm.' + key); });
+    li.querySelectorAll('[aria-label]').forEach(function (el) {
+      el.setAttribute('aria-label', el.getAttribute('aria-label').replace(/for .*$/, 'for ' + name));
+    });
+    src.parentNode.appendChild(li);
+    handlers['t.' + key] = function () { state.menu = state.menu === key ? null : key; state.appOpen = false; state.defOpen = false; };
+    li.dataset.newKey = key;
+    li.dataset.mode = fromFile === true ? 'file' : (fromFile || 'new');
+    updateCount();
+    selectInstance(key);
+    li.scrollIntoView({ block: 'nearest' });
+  }
+
   function renameInstance(key) {
     openDialog({
-      title: 'Rename instance', icon: 'pen', input: nameOf(key), ok: 'Rename',
+      title: 'Rename settings', icon: 'pen', input: nameOf(key), ok: 'Rename',
       onOk: function (v) {
         var li = rowFor(key);
         li.querySelector('.t1').textContent = v;
@@ -252,8 +328,19 @@
       var key = item.closest('[data-if]').getAttribute('data-if').slice(2);
       var label = item.textContent.trim();
       state.menu = null; render();
-      if (label === 'Rename') renameInstance(key);
-      else if (label === 'Delete') deleteInstance(key);
+      if (key === 'add') {
+        if (label === 'New instance') showCreateInstance();
+        return;
+      }
+      var nm = nameOf(key);
+      if (label === 'Rename settings') renameInstance(key);
+      else if (label === 'Delete settings') deleteInstance(key);
+      else if (label === 'Export settings') toast('ok', 'Settings exported', '“' + nm + '” was downloaded as a JSON file.');
+      else if (label === 'Import settings') toast('ok', 'Settings imported', 'The values from the file were applied to “' + nm + '”.');
+      else if (label === 'Copy settings') { addInstance(nm + ' (copy)', 'copy'); toast('ok', 'Settings copied', '“' + nm + ' (copy)” was created with the same values.'); }
+      else if (label === 'Restore default settings') openDialog({ title: 'Restore default settings?', icon: 'alert', kind: 'danger', ok: 'Restore',
+        text: 'All values in “' + nm + '” are replaced with the defaults of the definition.',
+        onOk: function () { toast('ok', 'Default settings restored', '“' + nm + '” uses the default values again.'); } });
       return;
     }
     // App "More options" items
@@ -313,9 +400,8 @@
       var txt = b.textContent.trim();
       if (txt === 'Save') { toast('ok', 'Changes saved', 'Your settings for “' + nameOf(state.selected) + '” were saved.'); return; }
       if (txt === 'Reset changes') { toast('ok', 'Changes reset', 'All unsaved changes were discarded.'); return; }
-      if (txt === 'Create instance') {
-        openDialog({ title: 'Create instance', icon: 'pen', input: 'New instance', ok: 'Create',
-          onOk: function (v) { toast('ok', 'Instance created', '“' + v + '” was added. (Not added to the list in this prototype.)'); } });
+      if (txt === 'Create instance' || b.getAttribute('aria-label') === 'Create instance') {
+        showCreateInstance();
         return;
       }
     }
@@ -360,7 +446,8 @@
     var n = document.body.getAttribute('data-screen') === 'update' ? 14 : 12;
     var props = {};
     for (var i = 1; i <= n; i++) props['setting' + i] = { type: 'string' };
-    useFile(new File([JSON.stringify({ type: 'object', properties: props })], 'crm-connection.schema.json', { type: 'application/json' }));
+    var fname = document.body.getAttribute('data-screen') === 'newfile' ? 'salesforce-apac.settings.json' : 'crm-connection.schema.json';
+    useFile(new File([JSON.stringify({ type: 'object', properties: props })], fname, { type: 'application/json' }));
   }
   var upTimer = null;
   function useFile(f) {
@@ -388,7 +475,7 @@
         try {
           var j = JSON.parse(r.result);
           var n = j && j.properties ? Object.keys(j.properties).length : 0;
-          result = { ok: true, msg: 'Valid JSON Schema' + (n ? ' · ' + n + ' settings' : '') };
+          result = { ok: true, msg: document.body.getAttribute('data-screen') === 'newfile' ? 'Valid settings file' + (n ? ' · ' + n + ' values' : '') : 'Valid JSON Schema' + (n ? ' · ' + n + ' settings' : '') };
         } catch (e) { result = { ok: false, msg: 'This file isn’t valid JSON.' }; }
       };
       r.readAsText(f);
@@ -425,6 +512,12 @@
     render();
     document.querySelectorAll('form').forEach(function (f) { f.noValidate = true; });
     var q = new URLSearchParams(location.search);
+    if (q.get('toast') === 'instance-created') {
+      var nn = q.get('name') || 'New instance';
+      addInstance(nn, true);
+      toast('ok', 'Instance created', '“' + nn + '” was created from the file.');
+      history.replaceState(null, '', location.pathname);
+    }
     if (q.get('toast') === 'update-rejected') {
       toast('bad', 'Definition not updated', '1 of 3 instances doesn’t fit the new schema. “CRM connection” is unchanged.', { label: 'Read more', fn: showRejected });
       history.replaceState(null, '', location.pathname);

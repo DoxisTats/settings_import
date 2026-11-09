@@ -18,7 +18,7 @@
 .pt-x{position:absolute;top:8px;right:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:8px;background:transparent;color:#A4A7AE;cursor:pointer}
 .pt-x:hover{background:#F5F5F5;color:#717680}
 
-.pt-scrim{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(10,13,18,0.35);font-family:Inter,system-ui,sans-serif}
+.pt-scrim{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(10,13,18,0.6);font-family:Inter,system-ui,sans-serif}
 .pt-modal{position:relative;width:440px;max-width:100%;border-radius:12px;background:#FFFFFF;box-shadow:0 20px 24px -4px rgba(10,13,18,0.08),0 8px 8px -4px rgba(10,13,18,0.03)}
 .pt-mh{display:flex;gap:16px;padding:24px 56px 0 24px}
 .pt-mh .pt-x{top:16px;right:16px}
@@ -39,3 +39,25 @@
 .pt-btn.pri:hover{background:#155C6E}
 .pt-btn.danger{background:#D92D20;color:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(10,13,18,0.18)}
 .pt-btn.danger:hover{background:#B42318}
+
+/* Create settings instance modal – from Figma (400px, radius 16) */
+.pt-cm-scrim{padding:32px;background:rgba(10,13,18,0.6)}
+.pt-cm{position:relative;width:400px;max-width:100%;box-sizing:border-box;display:flex;flex-direction:column;border-radius:16px;background:#FFFFFF;box-shadow:0 20px 24px -4px rgba(10,13,18,0.08),0 8px 8px -4px rgba(10,13,18,0.03),0 3px 3px -1.5px rgba(10,13,18,0.04);font-family:Inter,system-ui,sans-serif}
+.pt-cm-h{display:flex;flex-direction:column;gap:16px;padding:24px 24px 0}
+.pt-cm-ic{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:#DAE7EA;color:#1F7082}
+.pt-cm-tx{display:flex;flex-direction:column;gap:2px}
+.pt-cm-tx h2{margin:0;font-size:16px;line-height:24px;font-weight:600;color:#181D27}
+.pt-cm-tx p{margin:0;font-size:14px;line-height:20px;font-weight:400;color:#535862}
+.pt-cm-x{position:absolute;top:12px;right:12px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:8px;border:0;border-radius:8px;background:transparent;color:#A4A7AE;cursor:pointer}
+.pt-cm-x:hover{background:#F5F5F5;color:#717680}
+.pt-cm-b{display:flex;flex-direction:column;gap:6px;padding:20px 24px 0}
+.pt-cm-b label{font-size:14px;line-height:20px;font-weight:500;color:#414651}
+.pt-cm-b input{height:40px;box-sizing:border-box;padding:8px 12px;border:1px solid #D5D7DA;border-radius:8px;background:#FFFFFF;font:inherit;font-size:16px;line-height:24px;font-weight:400;color:#181D27;box-shadow:0 1px 2px rgba(10,13,18,0.05);outline:none}
+.pt-cm-b input::placeholder{color:#717680}
+.pt-cm-b input:focus{border-color:#388090;box-shadow:inset 0 0 0 1px #388090,0 1px 2px rgba(10,13,18,0.05)}
+.pt-cm-f{display:flex;gap:12px;padding:32px 24px 24px}
+.pt-cm-f button{flex:1;height:44px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:10px 16px !important;margin:0;border:0;border-radius:8px;font:inherit;font-size:16px;line-height:24px;font-weight:600;cursor:pointer}
+.pt-cm-sec{background:#FFFFFF;color:#414651;box-shadow:inset 0 0 0 1px #D5D7DA,0 1px 2px rgba(10,13,18,0.05),inset 0 -2px 0 rgba(10,13,18,0.05)}
+.pt-cm-sec:hover{background:#FAFAFA}
+.pt-cm-pri{background:#1F7082;color:#FFFFFF;box-shadow:inset 0 0 0 2px rgba(255,255,255,0.12),inset 0 0 0 1px rgba(10,13,18,0.18),inset 0 -2px 0 rgba(10,13,18,0.05),0 1px 2px rgba(10,13,18,0.05)}
+.pt-cm-pri:hover{background:#155C6E}

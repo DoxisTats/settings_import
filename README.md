@@ -9,15 +9,23 @@ Clickable prototype of the **Settings** page in a Doxis Business Studio applicat
 ## What you can click
 
 **Settings page** (`settings.html`)
-- ⋯ next to each instance → **Rename** (dialog with name field) and **Delete** (confirmation)
+- ⋯ next to each instance → Export, Import, Rename (dialog), Copy, Restore default (confirmation) and Delete (confirmation) settings
 - Red trash icon in the instance header → delete confirmation
 - Click an instance name to select it
 - **Definition options ▾** next to the tabs → Import definition, Export definition, Update from file
 - ⋯ in the application header → **More options** (Export, Update from file, Update from library)
 - Definition tabs, section links (Connection, Synchronization, Provider settings)
-- **Find a setting** and **Search instances** filter as you type
+- **Find a setting** filters as you type
 - **Save**, **Reset changes**, **Create instance** show notifications
 - Menus close on outside click or Esc
+
+**Settings – one instance** (`settings-general.html`)
+- General tab: a definition with only one instance shows no instance list; the ⋯ next to the title offers Export, Import, Restore default and Copy settings
+- Click the General / CRM connection tabs to switch between the two layouts
+
+**New instance from file** (`new-instance-from-file.html`)
+- + next to Instances → New instance (dialog) or New instance from file (this panel)
+- Settings file card, name field; **Create instance** returns to Settings with a notification
 
 **Import definition** (`import-definition.html`)
 - Trash icon removes the file; **Choose a file** puts it back
@@ -26,7 +34,6 @@ Clickable prototype of the **Settings** page in a Doxis Business Studio applicat
 
 **Export definition** (`export-definitions.html`)
 - Pick one definition (current tab preselected)
-- Include instance values switch
 - **Export** closes the panel and shows a notification
 
 **Update from file** (`update-definition.html`)
@@ -48,6 +55,6 @@ GitHub shows HTML files as code. To run the prototype in the browser, turn on Gi
 
 ## Open points
 
-- Whether exports include instance values by default, and whether standard definitions can be exported.
+- Whether standard definitions can be exported.
 - The **Expandable** option in the import panel has a placeholder description.
-- Create instance only shows a notification; it doesn’t add a row yet.
+- New instances are only kept until the page is reloaded.
