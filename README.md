@@ -22,7 +22,7 @@ Clickable prototype of the **Settings** page in a Doxis Business Studio applicat
 
 **Settings – field examples** (`settings-fields.html`)
 - Instance “Field examples” (CRM connection tab) shows every field type: text, multi-line, number with unit, email, URL with prefix, secret with show button, read-only, select, tags, radio buttons, checkboxes, switches, date, time with time zone
-- A large table ("Field mappings" section) with search, Add mapping, required checkboxes, delete and pagination
+- An editable table ("Value list table"): warning for rows whose value list key no longer exists (Hide / Clean up now), search, sortable columns, and switch, dropdown (with clear) and text fields in every row
 
 **Settings – one instance** (`settings-general.html`)
 - General tab: a definition with only one instance shows no instance list; the ⋯ next to the title offers Export, Import, Restore default and Copy settings

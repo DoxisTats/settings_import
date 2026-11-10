@@ -552,13 +552,76 @@
     cb.innerHTML = on ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>' : '';
   }
   document.addEventListener('input', function (e) {
-    var q = e.target.getAttribute('aria-label') === 'Search mappings' ? e.target.value.trim().toLowerCase() : null;
-    if (q === null) return;
-    document.querySelectorAll('.tbl tbody tr').forEach(function (tr) { tr.style.display = q && tr.textContent.toLowerCase().indexOf(q) === -1 ? 'none' : ''; });
+    var lbl = e.target.getAttribute('aria-label');
+    if (lbl !== 'Search mappings' && lbl !== 'Search table') return;
+    var q = e.target.value.trim().toLowerCase();
+    document.querySelectorAll('.tbl tbody tr').forEach(function (tr) {
+      if (tr.hasAttribute('data-gone')) return;
+      var txt = Array.prototype.map.call(tr.cells, function (c) {
+        var f = c.querySelector('input:not([type=checkbox]),select');
+        return f ? f.value : c.textContent;
+      }).join(' ');
+      tr.style.display = q && txt.toLowerCase().indexOf(q) === -1 ? 'none' : '';
+    });
   });
 
   window.addEventListener('scroll', function () {
     if (document.body.getAttribute('data-screen') !== 'ref' && window.scrollY) window.scrollTo(0, 0);
+  });
+
+
+  // ---------- editable value list table ----------
+  document.addEventListener('click', function (e) {
+    var act = e.target.closest('[data-tbl]');
+    if (act) {
+      var warn = act.closest('.tbl-warn'), orphan = document.querySelector('tr[data-orphan]');
+      if (act.getAttribute('data-tbl') === 'hide') {
+        if (orphan) { orphan.style.display = 'none'; orphan.setAttribute('data-gone', ''); }
+        act.textContent = 'Show';
+        act.setAttribute('data-tbl', 'show');
+      } else if (act.getAttribute('data-tbl') === 'show') {
+        if (orphan) { orphan.style.display = ''; orphan.removeAttribute('data-gone'); }
+        act.textContent = 'Hide';
+        act.setAttribute('data-tbl', 'hide');
+      } else {
+        if (orphan) orphan.remove();
+        if (warn) warn.remove();
+        toast('ok', 'Table cleaned up', '1 row with a missing value list key was removed.');
+      }
+      return;
+    }
+    var clr = e.target.closest('.cell-sel .clr');
+    if (clr) { var sel = clr.parentNode.querySelector('select'); sel.value = ''; clr.remove(); return; }
+    var sb = e.target.closest('.sortb');
+    if (sb) {
+      var th = sb.closest('th'), idx = Array.prototype.indexOf.call(th.parentNode.children, th);
+      var tb = th.closest('table').tBodies[0];
+      var dir = th.getAttribute('data-dir') === 'asc' ? 'desc' : 'asc';
+      th.parentNode.querySelectorAll('th').forEach(function (x) { x.removeAttribute('data-dir'); });
+      th.setAttribute('data-dir', dir);
+      var val = function (tr) {
+        var c = tr.cells[idx]; var f = c.querySelector('select,input');
+        if (c.querySelector('.tgl')) return c.querySelector('.tgl').classList.contains('off') ? '0' : '1';
+        return (f ? f.value : c.textContent).trim().toLowerCase();
+      };
+      var rows = Array.prototype.filter.call(tb.rows, function (r) { return !r.hasAttribute('data-orphan'); });
+      rows.sort(function (a, b) {
+        var x = val(a), y = val(b);
+        var n = x.localeCompare(y, undefined, { numeric: true });
+        return dir === 'asc' ? n : -n;
+      }).forEach(function (r) { tb.appendChild(r); });
+    }
+  });
+  document.addEventListener('change', function (e) {
+    var sel = e.target.closest('.cell-sel select');
+    if (!sel) return;
+    var wrap = sel.parentNode, clr = wrap.querySelector('.clr');
+    if (sel.value && !clr) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'clr'; b.setAttribute('aria-label', 'Clear ' + (sel.getAttribute('aria-label') || 'value'));
+      b.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A4A7AE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+      wrap.insertBefore(b, sel.nextSibling);
+    } else if (!sel.value && clr) clr.remove();
   });
 
   document.addEventListener('DOMContentLoaded', function () {
