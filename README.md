@@ -9,6 +9,7 @@ Clickable prototype of the **Settings** page in a Doxis Business Studio applicat
 ## What you can click
 
 **Settings page** (`settings.html`)
+- Instance list: Salesforce EU and Field examples (click to switch)
 - ⋯ next to each instance → Export, Import, Rename (dialog), Copy, Restore default (confirmation) and Delete (confirmation) settings
 - Red trash icon in the instance header → delete confirmation
 - Click an instance name to select it
@@ -18,6 +19,10 @@ Clickable prototype of the **Settings** page in a Doxis Business Studio applicat
 - **Find a setting** filters as you type
 - **Save**, **Reset changes**, **Create instance** show notifications
 - Menus close on outside click or Esc
+
+**Settings – field examples** (`settings-fields.html`)
+- Instance “Field examples” (CRM connection tab) shows every field type: text, multi-line, number with unit, email, URL with prefix, secret with show button, read-only, select, tags, radio buttons, checkboxes, switches, date, time with time zone
+- A large table ("Field mappings" section) with search, Add mapping, required checkboxes, delete and pagination
 
 **Settings – one instance** (`settings-general.html`)
 - General tab: a definition with only one instance shows no instance list; the ⋯ next to the title offers Export, Import, Restore default and Copy settings

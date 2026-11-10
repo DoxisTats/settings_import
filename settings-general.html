@@ -69,6 +69,9 @@ a{color:#066074}a:hover{color:#05495A}
 .anc{display:flex;gap:4px;flex:1;min-width:240px;flex-wrap:wrap}
 .anc a{height:32px;box-sizing:border-box;display:inline-flex;align-items:center;padding:0 10px;border-radius:6px;font-size:14px;line-height:20px;font-weight:600;color:#717680;text-decoration:none}
 .anc a:hover{background:#FAFAFA;color:#535862}
+.anc button{height:32px;box-sizing:border-box;display:inline-flex;align-items:center;padding:0 10px;border:0;border-radius:6px;background:transparent;font:inherit;font-size:14px;line-height:20px;font-weight:600;color:#717680;cursor:pointer}
+.anc button:hover{background:#FAFAFA;color:#535862}
+.anc button.on{background:#F5F5F5;color:#252B37}
 .anc a.on{background:#F5F5F5;color:#252B37}
 .srch2{position:relative;display:flex;align-items:center;width:240px}
 .srch2 svg{position:absolute;left:12px;color:#A4A7AE;pointer-events:none}
@@ -118,7 +121,7 @@ a{color:#066074}a:hover{color:#05495A}
 </head>
 <body data-screen="settings">
 <a href="index.html" class="pt-home" style="position:fixed;left:50%;transform:translateX(-50%);bottom:12px;z-index:70;padding:6px 10px;border-radius:8px;background:#181D27;color:#fff;font:600 12px/18px Inter,system-ui,sans-serif;text-decoration:none;opacity:.85">← All screens</a>
-<div style="height: 100vh; min-height: 640px; overflow: hidden; display: flex; flex-direction: column; background: #FAFAFA; font-family: Inter, system-ui, sans-serif; font-size: 14px; line-height: 20px; color: #181D27">
+<div style="height: 100vh; overflow: hidden; display: flex; flex-direction: column; background: #FAFAFA; font-family: Inter, system-ui, sans-serif; font-size: 14px; line-height: 20px; color: #181D27">
 
 <header style="height: 64px; flex: none; display: grid; grid-template-columns: minmax(134px, 1fr) minmax(0, 496px) minmax(134px, 1fr); align-items: center; column-gap: 16px; padding: 0 22px; background: linear-gradient(5deg, #075365 15.8%, #1F7082 82.5%); color: #FFFFFF">
 <a href="#" aria-label="Doxis Business Studio home" style="display: block; width: 104px; height: 34px; color: #FFFFFF; text-decoration: none">
@@ -249,7 +252,7 @@ a{color:#066074}a:hover{color:#05495A}
 </div>
 
 <nav class="ws-nav" aria-label="Sections">
-<div class="anc"><a href="#sec-disp" class="on" aria-current="true">Display</a><a href="#sec-docs">Documents</a></div>
+<div class="anc"><button type="button" data-href="#sec-disp" data-on="sec.disp" class="on" aria-current="true">Display</button><button type="button" data-href="#sec-docs" data-on="sec.docs">Documents</button></div>
 <div class="srch2"><input class="fld" type="search" placeholder="Find a setting" aria-label="Find a setting" style="height: 36px; padding: 5px 11px; font-size: 14px"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path transform="translate(3 3)" d="M18 18L12 12M14 7C14 10.866 10.866 14 7 14C3.134 14 0 10.866 0 7C0 3.134 3.134 0 7 0C10.866 0 14 3.134 14 7"></path></svg></div>
 </nav>
 

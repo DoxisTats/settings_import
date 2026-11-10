@@ -57,7 +57,7 @@
     removeFile: function () { clearInterval(upTimer); state.uploading = false; state.hasFile = false; },
     chooseFile: function () { pickFile(); }
   };
-  ['def', 'eu', 'us', 'gen', 'add'].forEach(function (k) {
+  ['def', 'eu', 'us', 'gen', 'add', 'fx'].forEach(function (k) {
     handlers['t.' + k] = function () {
       state.menu = state.menu === k ? null : k;
       state.appOpen = false;
@@ -385,12 +385,17 @@
     }
 
     // Section links in the workspace
-    var anc = e.target.closest('.anc a');
+    var anc = e.target.closest('.anc a, .anc button');
     if (anc) {
       e.preventDefault();
-      anc.parentNode.querySelectorAll('a').forEach(function (a) { a.classList.toggle('on', a === anc); });
-      var target = document.querySelector(anc.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      anc.parentNode.querySelectorAll('a, button').forEach(function (a) { a.classList.toggle('on', a === anc); });
+      var target = document.querySelector(anc.getAttribute('href') || anc.getAttribute('data-href'));
+      var sc = target && target.closest('form.scr');
+      if (sc) {
+        // scroll only the settings area, never the page around it
+        var top = target.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop;
+        sc.scrollTo({ top: top, behavior: 'smooth' });
+      }
       return;
     }
 
@@ -506,6 +511,54 @@
     e.preventDefault();
     var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
     if (f) useFile(f);
+  });
+
+
+  // ---------- field examples page: simple control behaviour ----------
+  document.addEventListener('click', function (e) {
+    var opt = e.target.closest('.opt');
+    if (opt) {
+      var rb = opt.querySelector('.rb'), cb = opt.querySelector('.cb');
+      if (rb) { opt.parentNode.querySelectorAll('.rb').forEach(function (r) { r.classList.remove('on'); r.innerHTML = '<span></span>'; }); rb.classList.add('on'); }
+      if (cb) toggleCb(cb);
+      return;
+    }
+    var tcb = e.target.closest('.tbl .cb');
+    if (tcb) { toggleCb(tcb); return; }
+    var tg = e.target.closest('.tgl');
+    if (tg) {
+      var on = !tg.classList.contains('off');
+      tg.classList.toggle('off', on); tg.setAttribute('aria-checked', on ? 'false' : 'true');
+      var lbl = tg.nextElementSibling; if (lbl && /^(On|Off)$/.test(lbl.textContent)) lbl.textContent = on ? 'Off' : 'On';
+      return;
+    }
+    var chipx = e.target.closest('.chip button');
+    if (chipx) { chipx.closest('.chip').remove(); return; }
+    var del = e.target.closest('.tbl [aria-label^="Delete mapping"]');
+    if (del) { var tr = del.closest('tr'); var nm = tr.querySelector('td').textContent; tr.remove(); toast('ok', 'Mapping removed', '“' + nm + '” was removed. Save to keep the change.'); return; }
+    var addm = e.target.closest('button');
+    if (addm && addm.textContent.trim() === 'Add mapping') {
+      var tb = document.querySelector('.tbl tbody'); if (!tb) return;
+      var tr2 = tb.rows[0].cloneNode(true);
+      tr2.cells[0].innerHTML = '<input class="fld" placeholder="CRM field" style="height:36px;padding:5px 9px;font-size:14px">';
+      tr2.cells[1].innerHTML = '<input class="fld" placeholder="Doxis property" style="height:36px;padding:5px 9px;font-size:14px">';
+      tb.insertBefore(tr2, tb.firstChild); tr2.cells[0].querySelector('input').focus();
+    }
+  });
+  function toggleCb(cb) {
+    var on = !cb.classList.contains('on');
+    cb.classList.toggle('on', on);
+    if (cb.hasAttribute('aria-checked')) cb.setAttribute('aria-checked', on ? 'true' : 'false');
+    cb.innerHTML = on ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>' : '';
+  }
+  document.addEventListener('input', function (e) {
+    var q = e.target.getAttribute('aria-label') === 'Search mappings' ? e.target.value.trim().toLowerCase() : null;
+    if (q === null) return;
+    document.querySelectorAll('.tbl tbody tr').forEach(function (tr) { tr.style.display = q && tr.textContent.toLowerCase().indexOf(q) === -1 ? 'none' : ''; });
+  });
+
+  window.addEventListener('scroll', function () {
+    if (document.body.getAttribute('data-screen') !== 'ref' && window.scrollY) window.scrollTo(0, 0);
   });
 
   document.addEventListener('DOMContentLoaded', function () {
